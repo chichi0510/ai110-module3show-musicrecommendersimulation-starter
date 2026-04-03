@@ -30,7 +30,7 @@ This project simulates a **content-based** music recommender: each row in `data/
 
 ### Step 2 — User profile
 
-The recommender compares each song to a **fixed preference record**. Example used in `src/main.py`:
+The recommender compares each song to a **fixed preference record**. `src/main.py` defines **three** stress-test profiles (**High-Energy Pop**, **Chill Lofi**, **Deep Intense Rock**); each is passed as `genre` / `mood` / `energy` (see `score_song` aliases). Example single profile:
 
 ```python
 user_profile = {
@@ -39,8 +39,6 @@ user_profile = {
     "target_energy": 0.8,
 }
 ```
-
-The same preferences are passed into scoring as `genre` / `mood` / `energy` (aliases documented in `score_song`).
 
 **Discriminability:** this profile is not “everything is 0.5.” It separates **high-energy happy pop** from **chill lofi**, **dark classical**, or **aggressive electronic** because genre/mood must match for big points and energy must sit near `0.8`.
 
@@ -141,6 +139,34 @@ This system may **over-prioritize genre** and **under-recommend** tracks that ma
 - [x] Defined a concrete, discriminative `user_profile` in `main.py`  
 - [x] Documented scoring (+2 / +1 / energy similarity), sorting, Top K  
 - [x] Flow diagram (Mermaid) and **bias** notes in this README  
+
+---
+
+## Evaluation & stress tests
+
+`src/main.py` runs **three** contrasting profiles back-to-back, then a **weight-shift experiment** on the *Chill Lofi* user (default scoring vs **energy emphasis**: genre **+1**, mood **+1**, energy similarity scaled **×2**). Full console capture: [`docs/eval-output-full.txt`](docs/eval-output-full.txt).
+
+### Terminal-style captures (one per profile)
+
+These illustrate **title**, **score**, and **reasons** for the **#1** song under each persona. For course submission you may replace them with your own terminal screenshots.
+
+**High-Energy Pop** (`pop` / `happy` / high energy)
+
+![Stress test: High-Energy Pop — top recommendation](docs/eval-profile-high-energy-pop.png)
+
+**Chill Lofi** (`lofi` / `chill` / low energy)
+
+![Stress test: Chill Lofi — top recommendation](docs/eval-profile-chill-lofi.png)
+
+**Deep Intense Rock** (`rock` / `intense` / high energy)
+
+![Stress test: Deep Intense Rock — top recommendation](docs/eval-profile-deep-rock.png)
+
+### What we looked for
+
+- **Different profiles → different tops:** e.g. *Sunrise City* leads for pop/happy; *Library Rain* for lofi/chill; *Storm Runner* for rock/intense.  
+- **Label bias:** exact **genre** strings dominate; e.g. *indie pop* does not count as *pop* without changing the data.  
+- **Experiment:** doubling energy weight did **not** change the **order** of the Chill Lofi top five in our run—genre+mood matches still won. See **[`model_card.md`](model_card.md)** §7 and **[`reflection.md`](reflection.md)** for narrative analysis.
 
 ---
 
@@ -256,11 +282,9 @@ You will go deeper on this in your model card.
 
 ## Reflection
 
-Read and complete `model_card.md`:
+Read **[`model_card.md`](model_card.md)** (limitations, evaluation) and **[`reflection.md`](reflection.md)** (pairwise profile comparison).
 
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
+Write 1 to 2 paragraphs here about what you learned (optional course paste):
 
 - about how recommenders turn data into predictions  
 - about where bias or unfairness could show up in systems like this  
