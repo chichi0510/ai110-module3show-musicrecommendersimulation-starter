@@ -1,0 +1,33 @@
+Loading songs from data/songs.csv...
+Loaded songs: 18
+
+Top recommendations:
+
+1. Sunrise City
+   Score: 3.98
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.98)
+
+2. Gym Hero
+   Score: 2.87
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.87)
+
+3. Rooftop Lights
+   Score: 1.96
+   Reasons:
+   - mood match (+1.0)
+   - energy close to target (+0.96)
+
+4. Night Drive Loop
+   Score: 0.95
+   Reasons:
+   - energy close to target (+0.95)
+
+5. Neon Pulse
+   Score: 0.92
+   Reasons:
+   - energy close to target (+0.92)
