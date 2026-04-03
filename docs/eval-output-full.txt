@@ -1,0 +1,196 @@
+Loading songs from data/songs.csv...
+Loaded songs: 18
+
+================================================================
+Profile: High-Energy Pop
+Upbeat pop, happy mood, high target energy
+================================================================
+
+Top recommendations:
+
+1. Sunrise City
+   Score: 3.97
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.97)
+
+2. Gym Hero
+   Score: 2.92
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.92)
+
+3. Rooftop Lights
+   Score: 1.91
+   Reasons:
+   - mood match (+1.0)
+   - energy close to target (+0.91)
+
+4. Neon Pulse
+   Score: 0.97
+   Reasons:
+   - energy close to target (+0.97)
+
+5. Storm Runner
+   Score: 0.94
+   Reasons:
+   - energy close to target (+0.94)
+
+
+================================================================
+Profile: Chill Lofi
+Lofi + chill mood, low target energy
+================================================================
+
+Top recommendations:
+
+1. Library Rain
+   Score: 3.99
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.99)
+
+2. Midnight Coding
+   Score: 3.94
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.94)
+
+3. Basement Fog
+   Score: 2.97
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.97)
+
+4. Focus Flow
+   Score: 2.96
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.96)
+
+5. Spacewalk Thoughts
+   Score: 1.92
+   Reasons:
+   - mood match (+1.0)
+   - energy close to target (+0.92)
+
+
+================================================================
+Profile: Deep Intense Rock
+Rock + intense mood, high target energy
+================================================================
+
+Top recommendations:
+
+1. Storm Runner
+   Score: 3.99
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.99)
+
+2. Old Tape Hiss
+   Score: 2.72
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.72)
+
+3. Gym Hero
+   Score: 1.97
+   Reasons:
+   - mood match (+1.0)
+   - energy close to target (+0.97)
+
+4. Neon Pulse
+   Score: 0.98
+   Reasons:
+   - energy close to target (+0.98)
+
+5. Sunrise City
+   Score: 0.92
+   Reasons:
+   - energy close to target (+0.92)
+
+
+================================================================
+Experiment — Chill Lofi user, DEFAULT weights
+(genre +2.0, mood +1.0, energy similarity 0–1)
+================================================================
+
+Top recommendations:
+
+1. Library Rain
+   Score: 3.99
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.99)
+
+2. Midnight Coding
+   Score: 3.94
+   Reasons:
+   - genre match (+2.0)
+   - mood match (+1.0)
+   - energy close to target (+0.94)
+
+3. Basement Fog
+   Score: 2.97
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.97)
+
+4. Focus Flow
+   Score: 2.96
+   Reasons:
+   - genre match (+2.0)
+   - energy close to target (+0.96)
+
+5. Spacewalk Thoughts
+   Score: 1.92
+   Reasons:
+   - mood match (+1.0)
+   - energy close to target (+0.92)
+
+
+================================================================
+Experiment — Chill Lofi user, ENERGY emphasis
+(genre +1.0, mood +1.0, energy similarity 0–2)
+================================================================
+
+Top recommendations:
+
+1. Library Rain
+   Score: 3.98
+   Reasons:
+   - genre match (+1.0)
+   - mood match (+1.0)
+   - energy close to target (+1.98)
+
+2. Midnight Coding
+   Score: 3.88
+   Reasons:
+   - genre match (+1.0)
+   - mood match (+1.0)
+   - energy close to target (+1.88)
+
+3. Basement Fog
+   Score: 2.94
+   Reasons:
+   - genre match (+1.0)
+   - energy close to target (+1.94)
+
+4. Focus Flow
+   Score: 2.92
+   Reasons:
+   - genre match (+1.0)
+   - energy close to target (+1.92)
+
+5. Spacewalk Thoughts
+   Score: 2.84
+   Reasons:
+   - mood match (+1.0)
+   - energy close to target (+1.84)
+
