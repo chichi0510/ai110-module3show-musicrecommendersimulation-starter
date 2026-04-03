@@ -17,8 +17,18 @@ def _energy_similarity(target: float, song_energy: float) -> float:
     return max(0.0, 1.0 - abs(float(song_energy) - float(target)))
 
 
-def _total_score(genre_m: float, mood_m: float, energy_sim: float) -> float:
-    return POINTS_GENRE_MATCH * genre_m + POINTS_MOOD_MATCH * mood_m + energy_sim
+def _total_score(
+    genre_m: float,
+    mood_m: float,
+    energy_sim: float,
+    *,
+    genre_points: float = POINTS_GENRE_MATCH,
+    mood_points: float = POINTS_MOOD_MATCH,
+    energy_scale: float = 1.0,
+    use_mood: bool = True,
+) -> float:
+    m = mood_m if use_mood else 0.0
+    return genre_points * genre_m + mood_points * m + energy_scale * energy_sim
 
 
 @dataclass
@@ -63,7 +73,7 @@ class Recommender:
             g = _genre_mood_match(user.favorite_genre, song.genre)
             m = _genre_mood_match(user.favorite_mood, song.mood)
             e = _energy_similarity(user.target_energy, song.energy)
-            scored.append((_total_score(g, m, e), song))
+            scored.append((_total_score(g, m, e, use_mood=True), song))
         scored = sorted(scored, key=lambda t: t[0], reverse=True)
         return [s for _, s in scored[:k]]
 
@@ -99,33 +109,53 @@ def load_songs(csv_path: str) -> List[Dict[str, Any]]:
     print(f"Loaded songs: {len(rows)}")
     return rows
 
-def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+def score_song(
+    user_prefs: Dict,
+    song: Dict,
+    *,
+    genre_points: float = POINTS_GENRE_MATCH,
+    mood_points: float = POINTS_MOOD_MATCH,
+    energy_scale: float = 1.0,
+    use_mood: bool = True,
+) -> Tuple[float, List[str]]:
     """Return total match score and human-readable reason strings for one song."""
     genre_key = user_prefs.get("genre") or user_prefs.get("favorite_genre", "")
     mood_key = user_prefs.get("mood") or user_prefs.get("favorite_mood", "")
     target_energy = float(user_prefs.get("energy", user_prefs.get("target_energy", 0.5)))
 
     g = _genre_mood_match(str(genre_key), str(song.get("genre", "")))
-    m = _genre_mood_match(str(mood_key), str(song.get("mood", "")))
+    m_raw = _genre_mood_match(str(mood_key), str(song.get("mood", "")))
+    m = m_raw if use_mood else 0.0
     e = _energy_similarity(target_energy, float(song.get("energy", 0.0)))
-    score = _total_score(g, m, e)
+    score = _total_score(
+        g,
+        m_raw,
+        e,
+        genre_points=genre_points,
+        mood_points=mood_points,
+        energy_scale=energy_scale,
+        use_mood=use_mood,
+    )
 
     reasons: List[str] = []
     if g >= 1.0:
-        reasons.append(f"genre match (+{POINTS_GENRE_MATCH:.1f})")
-    if m >= 1.0:
-        reasons.append(f"mood match (+{POINTS_MOOD_MATCH:.1f})")
-    reasons.append(f"energy close to target (+{e:.2f})")
+        reasons.append(f"genre match (+{genre_points:.1f})")
+    if use_mood and m_raw >= 1.0:
+        reasons.append(f"mood match (+{mood_points:.1f})")
+    reasons.append(f"energy close to target (+{energy_scale * e:.2f})")
     return score, reasons
 
 
 def recommend_songs(
-    user_prefs: Dict, songs: List[Dict], k: int = 5
+    user_prefs: Dict,
+    songs: List[Dict],
+    k: int = 5,
+    **score_kwargs: Any,
 ) -> List[Tuple[Dict, float, List[str]]]:
-    """Score every song, sort by score descending with sorted(), return top k as (song, score, reasons)."""
+    """Score every song via score_song (optional genre_points, mood_points, energy_scale, use_mood), sort, top k."""
     ranked: List[Tuple[Dict, float, List[str]]] = []
     for song in songs:
-        score, reasons = score_song(user_prefs, song)
+        score, reasons = score_song(user_prefs, song, **score_kwargs)
         ranked.append((song, score, reasons))
     ranked = sorted(ranked, key=lambda t: t[1], reverse=True)
     return ranked[:k]
